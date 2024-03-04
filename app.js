@@ -5,6 +5,7 @@ const methodoverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
 const users = require("./models/users.js");
+const post = require("./models/post.js");
 // const
 mongoose.set("strictQuery", true);
 main().catch(err => console.log(err));
@@ -25,7 +26,7 @@ app.use(methodoverride("_method"));
 app.use(express.urlencoded({extended: true}));
 
 app.get("/", (req, res) => {
-	const threads = res.render("/appPages/signUp.ejs");
+	const threads = res.render("./appPages/signUp.ejs");
 });
 
 app.get("/home", (req, res) => {
@@ -33,5 +34,20 @@ app.get("/home", (req, res) => {
 });
 
 app.get("/forum", (req, res) => {
-	res.render("/appPages/forum.ejs");
+	res.render("./appPages/forum.ejs");
+});
+
+app.get("/home", (req, res) => {
+	console.log("Got the request");
+	res.render("./home.ejs");
+});
+
+app.post("/account/create", async (req, res) => {
+	const user = new users(req.body);
+	await user.save();
+	res.redirect("/home");
+});
+
+app.listen(5000, () => {
+	console.log("Serving on port 5000!");
 });

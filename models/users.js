@@ -28,6 +28,4 @@ const userSchema = new Schema({
 	},
 });
 
-// Optionally add timestamps for automatic creation and update timestamps:
-userSchema.timestamps({timestamps: true});
 module.exports = mongoose.model("User", userSchema);
